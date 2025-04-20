@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What Should I Watch? 🎬</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #121212;
+      color: #f0f0f0;
+      padding: 2rem;
+      max-width: 800px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+    }
+    select, button, input {
+      padding: 0.6rem;
+      font-size: 1rem;
+      margin: 0.5rem 0;
+      border-radius: 5px;
+      border: none;
+    }
+    .movie {
+      background-color: #1e1e1e;
+      padding: 1rem;
+      border-radius: 10px;
+      margin: 1rem 0;
+      box-shadow: 0 0 10px rgba(255,255,255,0.05);
+    }
+    .movie h3 {
+      margin: 0;
+    }
+    .movie button {
+      margin-top: 0.5rem;
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+    }
+    .movie button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎬 What Should I Watch?</h1>
+
+  <label for="genre">Choose Genre:</label>
+  <select id="genre">
+    <option value="all">All</option>
+    <option value="action">Action</option>
+    <option value="comedy">Comedy</option>
+    <option value="drama">Drama</option>
+    <option value="horror">Horror</option>
+    <option value="romance">Romance</option>
+    <option value="sci-fi">Sci-Fi</option>
+    <option value="thriller">Thriller</option>
+  </select>
+
+  <label for="platform">Choose Platform:</label>
+  <select id="platform">
+    <option value="all">All</option>
+    <option value="netflix">Netflix</option>
+    <option value="prime">Amazon Prime</option>
+    <option value="hotstar">Disney+ Hotstar</option>
+    <option value="zee5">ZEE5</option>
+    <option value="sonyliv">SonyLiv</option>
+  </select>
+
+  <button onclick="filterMovies()">🔍 Recommend</button>
+
+  <div id="results"></div>
+
+  <script>
+    const movies = [
+      { title: "Extraction", genre: "action", platform: "netflix" },
+      { title: "The Boys", genre: "action", platform: "prime" },
+      { title: "Stranger Things", genre: "drama", platform: "netflix" },
+      { title: "Mirzapur", genre: "drama", platform: "prime" },
+      { title: "Deadpool", genre: "comedy", platform: "hotstar" },
+      { title: "The Conjuring", genre: "horror", platform: "hotstar" },
+      { title: "The Office", genre: "comedy", platform: "netflix" },
+      { title: "Shershaah", genre: "drama", platform: "prime" },
+      { title: "Rocket Boys", genre: "drama", platform: "sonyliv" },
+      { title: "The Family Man", genre: "thriller", platform: "prime" },
+      { title: "Interstellar", genre: "sci-fi", platform: "netflix" },
+      { title: "Inception", genre: "sci-fi", platform: "netflix" },
+      { title: "Tumbbad", genre: "horror", platform: "prime" },
+      { title: "Dil Bechara", genre: "romance", platform: "hotstar" },
+      { title: "Sita Ramam", genre: "romance", platform: "prime" },
+      { title: "URI: The Surgical Strike", genre: "action", platform: "zee5" },
+      { title: "Scam 1992", genre: "drama", platform: "sonyliv" }
+    ];
+
+    function filterMovies() {
+      const genre = document.getElementById("genre").value;
+      const platform = document.getElementById("platform").value;
+      const resultDiv = document.getElementById("results");
+      resultDiv.innerHTML = "";
+
+      const filtered = movies.filter(m =>
+        (genre === "all" || m.genre === genre) &&
+        (platform === "all" || m.platform === platform)
+      );
+
+      if (filtered.length === 0) {
+        resultDiv.innerHTML = "<p>No matches found. Try different filters!</p>";
+        return;
+      }
+
+      filtered.forEach(m => {
+        const div = document.createElement("div");
+        div.className = "movie";
+        div.innerHTML = `<h3>${m.title}</h3><p>Genre: ${m.genre}, Platform: ${m.platform}</p>`;
+        const voteBtn = document.createElement("button");
+        voteBtn.textContent = "👍 Add to Watchlist";
+        voteBtn.onclick = () => alert(`${m.title} added to watchlist!`);
+        div.appendChild(voteBtn);
+        resultDiv.appendChild(div);
+      });
+    }
+  </script>
+</body>
+</html>
